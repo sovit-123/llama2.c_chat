@@ -37,8 +37,8 @@ eval_interval = 2000
 log_interval = 1
 eval_iters = 100
 eval_only = False  # if True, script exits right after the first eval
-always_save_checkpoint = False  # if True, always save a checkpoint after each eval
-init_from = "scratch"  # 'scratch' or 'resume'
+always_save_checkpoint = True  # if True, always save a checkpoint after each eval
+init_from = "resume"  # 'scratch' or 'resume'
 # wandb logging
 wandb_log = False  # disabled by default
 wandb_project = "llamac"
@@ -55,7 +55,7 @@ dropout = 0.0
 # adamw optimizer
 gradient_accumulation_steps = 4  # used to simulate larger batch sizes
 learning_rate = 5e-4  # max learning rate
-max_iters = 100000  # total number of training iterations
+max_iters = 400000  # total number of training iterations
 weight_decay = 1e-1
 beta1 = 0.9
 beta2 = 0.95
@@ -152,7 +152,7 @@ if init_from == "scratch":
 elif init_from == "resume":
     print(f"Resuming training from {out_dir}")
     # resume training from a checkpoint.
-    ckpt_path = os.path.join(out_dir, "ckpt.pt")
+    ckpt_path = os.path.join('pretrained_models', "stories15M.pt")
     checkpoint = torch.load(ckpt_path, map_location=device)
     checkpoint_model_args = checkpoint["model_args"]
     # force these config attributes to be equal otherwise we can't even resume training
